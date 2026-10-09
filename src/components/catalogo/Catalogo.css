@@ -1,0 +1,74 @@
+.catalogo {
+  margin: auto;
+  max-width: 1240px;
+  padding: 3rem 1.5rem;
+}
+
+.catalogo h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  letter-spacing: -0.05em;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  color: var(--text);
+  text-shadow: 0 0 20px rgba(78, 231, 245, 0.3);
+}
+
+.productos {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.producto {
+  background: linear-gradient(
+    155deg,
+    rgba(24, 31, 45, 0.96),
+    rgba(12, 16, 25, 0.98)
+  );
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  transition: all 0.25s ease;
+}
+
+.producto:hover {
+  border-color: rgba(78, 231, 245, 0.55);
+  box-shadow: 0 0 25px rgba(78, 231, 245, 0.25);
+  transform: translateY(-6px);
+}
+
+.producto h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  color: var(--text);
+}
+
+.producto p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.producto button {
+  background: var(--cyan);
+  border: 1px solid var(--cyan);
+  border-radius: 8px;
+  color: #071015;
+  cursor: pointer;
+  font: 800 0.9rem var(--font-main);
+  padding: 0.7rem 1.2rem;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.producto button:hover {
+  box-shadow: 0 8px 26px rgba(78, 231, 245, 0.35);
+  transform: translateY(-2px);
+}

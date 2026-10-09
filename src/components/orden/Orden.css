@@ -1,0 +1,79 @@
+.form-container {
+  background: linear-gradient(145deg, #192232, #0d111b);
+  border: 1px solid rgba(78, 231, 245, 0.32);
+  border-radius: var(--radius);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+  max-width: 520px;
+  margin: 4rem auto;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+.form-container h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.8rem;
+  text-align: center;
+  color: var(--text);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  font-size: 0.83rem;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+}
+
+.form-group input,
+.form-group select {
+  background: rgba(5, 7, 12, 0.6);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 0.78rem 0.85rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(78, 231, 245, 0.13);
+  outline: 0;
+}
+
+.ayuda-texto {
+  color: var(--muted);
+  font-size: 0.73rem;
+  margin-top: 0.3rem;
+}
+
+.error-msg {
+  color: var(--error);
+  font-size: 0.78rem;
+  margin-top: 0.3rem;
+}
+
+.btn-full {
+  background: var(--cyan);
+  border: 1px solid var(--cyan);
+  border-radius: 8px;
+  color: #071015;
+  cursor: pointer;
+  font: 800 0.9rem var(--font-main);
+  padding: 0.7rem 1.15rem;
+  width: 100%;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.btn-full:hover {
+  box-shadow: 0 8px 26px rgba(78, 231, 245, 0.25);
+  transform: translateY(-2px);
+}

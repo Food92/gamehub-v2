@@ -1,32 +1,37 @@
-const Header = () => {
+import React from "react";
+import "./Header.css";
+
+function Header() {
   return (
-    <header className="header">
-      <a href="index.html" className="logo-container">
+    <header>
+      <a href="/" className="logo-container">
         <div className="logo-text">
           <span className="brand-game">GAME</span>
           <span className="brand-hub">HUB</span>
           <span className="brand-badge">STORE</span>
         </div>
       </a>
-
       <nav>
         <ul>
           <li>
-            <a href="index.html">Inicio</a>
+            <a href="/">Inicio</a>
           </li>
           <li>
-            <a href="catalogo.html">Catálogo</a>
+            <a href="/catalogo">Catálogo</a>
           </li>
           <li>
-            <a href="perfil.html">Perfil</a>
+            <a href="/perfil">Perfil</a>
           </li>
           <li>
-            <a href="registro.html">Registro</a>
+            <a href="/registro">Registro</a>
+          </li>
+          <li>
+            <a href="/contacto">Contacto</a>
           </li>
         </ul>
       </nav>
     </header>
   );
-};
+}
 
 export default Header;

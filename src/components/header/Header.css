@@ -1,0 +1,90 @@
+header {
+  align-items: center;
+  backdrop-filter: blur(16px);
+  background: rgba(7, 9, 15, 0.84);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  padding: 1.1rem clamp(1rem, 5vw, 5rem);
+  position: sticky;
+  top: 0;
+  z-index: 8;
+}
+
+.logo-container {
+  display: flex;
+  text-decoration: none;
+}
+
+.logo-text {
+  display: flex;
+  font-family: var(--font-display);
+  font-size: 1.27rem;
+  font-style: italic;
+  letter-spacing: -0.07em;
+  text-transform: uppercase;
+  transform: skewX(-7deg);
+}
+
+.brand-game,
+.brand-hub {
+  text-shadow: 0 0 15px rgba(78, 231, 245, 0.3);
+}
+
+.brand-game {
+  color: var(--text);
+}
+
+.brand-hub {
+  color: var(--cyan);
+  margin-left: 0.08em;
+}
+
+.brand-badge {
+  background: var(--cyan);
+  box-shadow: 0 0 16px rgba(78, 231, 245, 0.38);
+  color: #061015;
+  font-family: var(--font-main);
+  font-size: 0.43em;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  margin-left: 0.7rem;
+  padding: 0.35rem 0.4rem 0.3rem 0.54rem;
+  transform: skewX(7deg);
+}
+
+nav ul {
+  display: flex;
+  gap: clamp(0.8rem, 2vw, 1.8rem);
+  list-style: none;
+}
+
+nav a {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+  position: relative;
+  text-decoration: none;
+}
+
+nav a::after {
+  background: var(--cyan);
+  bottom: -0.45rem;
+  content: "";
+  height: 2px;
+  left: 0;
+  position: absolute;
+  transform: scaleX(0);
+  transition: transform 0.2s;
+  width: 100%;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--text);
+}
+
+nav a:hover::after,
+nav a.active::after {
+  transform: scaleX(1);
+}

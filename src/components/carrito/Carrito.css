@@ -1,0 +1,69 @@
+.carrito-container {
+  margin: auto;
+  max-width: 850px;
+}
+
+.lista-carrito {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.item-carrito {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 80px 1fr auto auto auto;
+  padding: 0.9rem;
+}
+
+.item-carrito img {
+  border-radius: 8px;
+  height: 60px;
+  object-fit: cover;
+  width: 80px;
+}
+
+.item-carrito h3 {
+  font-size: 0.95rem;
+}
+
+.item-carrito-info p {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.controles-cantidad {
+  align-items: center;
+  display: flex;
+  gap: 0.55rem;
+}
+
+.controles-cantidad button,
+.btn-eliminar {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0.28rem 0.6rem;
+}
+
+.btn-eliminar {
+  color: #ff9fa7;
+}
+
+.resumen-carrito {
+  margin-top: 1rem;
+  padding: 1.3rem;
+  text-align: right;
+}
+
+.resumen-carrito h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: -0.04em;
+  margin-bottom: 1rem;
+}
