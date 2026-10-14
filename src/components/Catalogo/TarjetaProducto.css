@@ -1,0 +1,3 @@
+/* La tarjeta usa las clases visuales comunes definidas en App.css. */
+.product { min-width: 0; }
+.product img { max-width: 100%; object-fit: contain; }
