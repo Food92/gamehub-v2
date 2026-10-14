@@ -18,7 +18,7 @@ export default function App() {
         className="floating-cart"
         aria-label="Ver carrito de compras"
       >
-        🛒 <span>{gameHub.cantidadTotal}</span>
+        <span>{gameHub.cantidadTotal}</span>
       </a>
       {gameHub.modal && (
         <div
