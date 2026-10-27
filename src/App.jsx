@@ -9,7 +9,7 @@ export default function App() {
   return (
     <>
       <Header pagina={gameHub.pagina} />
-      <main className="container-fluid">
+      <main className="container-fluid px-3 px-md-4 px-xl-5">
         <VistaActual {...gameHub} />
       </main>
       <Footer />
