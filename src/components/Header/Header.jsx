@@ -1,16 +1,15 @@
-const enlaces = [
-  ["inicio", "Inicio"],
-  ["catalogo", "Catálogo"],
-  ["ofertas", "Ofertas"],
-  ["carrito", "Carrito"],
-  ["perfil", "Perfil"],
-  ["contacto", "Contacto"],
-  ["admin", "Administración"],
-];
-export default function Header({ pagina }) {
+import {
+  obtenerEnlacesNavegacion,
+  rutaPorDefecto,
+} from "../../logica/roles.js";
+
+export default function Header({ pagina, rol = null }) {
+  const enlaces = obtenerEnlacesNavegacion(rol);
+  const destinoLogo = rutaPorDefecto(rol);
+
   return (
     <header>
-      <a className="logo" href="#inicio">
+      <a className="logo" href={`#${destinoLogo}`}>
         <span>GAME</span>
         <b>HUB</b>
         <small>STORE</small>

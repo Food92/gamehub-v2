@@ -7,6 +7,7 @@ export default function Catalogo({
   cargandoProductos = false,
   errorProductos = "",
   formatoPrecio,
+  soloLectura = false,
   onVerCaracteristicas,
   onVerDetalle,
   onAgregar,
@@ -44,6 +45,7 @@ export default function Catalogo({
           <TarjetaProducto
             producto={producto}
             formatoPrecio={formatoPrecio}
+            soloLectura={soloLectura}
             onVerCaracteristicas={onVerCaracteristicas}
             onVerDetalle={onVerDetalle}
             onAgregar={onAgregar}
