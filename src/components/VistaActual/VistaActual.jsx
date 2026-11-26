@@ -134,6 +134,8 @@ export default function VistaActual(p) {
           validarCuponCheckout={p.validarCuponCheckout}
           finalizarCompra={p.finalizarCompra}
           procesandoCompra={p.procesandoCompra}
+          simularPagoOrden={p.simularPagoOrden}
+          pagandoOrdenId={p.pagandoOrdenId}
           mensaje={p.mensaje}
           navegar={p.navegar}
           formatoPrecio={formatoPrecio}
@@ -165,6 +167,8 @@ export default function VistaActual(p) {
       <Perfil
         usuario={p.usuario}
         misOrdenes={p.misOrdenes}
+        simularPagoOrden={p.simularPagoOrden}
+        pagandoOrdenId={p.pagandoOrdenId}
         iniciarSesion={p.iniciarSesion}
         cerrarSesion={p.cerrarSesion}
         navegar={p.navegar}
@@ -217,6 +221,8 @@ export default function VistaActual(p) {
           onRecargar={() => p.cargarOrdenes()}
           puedeGestionar={adminActivo}
           onCambiarEstado={p.actualizarEstadoOrden}
+          onSimularPago={p.simularPagoOrden}
+          pagandoOrdenId={p.pagandoOrdenId}
           onCancelarOrden={p.cancelarOrdenPorId}
           mensaje={p.mensaje}
         />
@@ -252,6 +258,8 @@ export default function VistaActual(p) {
           onCerrarDetalleOrden={() => p.setOrdenSeleccionada(null)}
           onRecargarOrdenes={() => p.cargarOrdenes()}
           onCambiarEstadoOrden={p.actualizarEstadoOrden}
+          onSimularPagoOrden={p.simularPagoOrden}
+          pagandoOrdenId={p.pagandoOrdenId}
           onCancelarOrden={p.cancelarOrdenPorId}
           usuariosAdmin={p.usuariosAdmin}
           cuentasAdmin={p.cuentasAdmin}

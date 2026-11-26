@@ -22,10 +22,24 @@ export const ordenesService = {
       opciones,
     ),
 
+  listarCuponesActivos: (opciones = {}) =>
+    solicitar("/promotions/active", opciones),
+
   crear: (orderDTO) =>
     solicitar("/orders", {
       method: "POST",
       body: JSON.stringify(orderDTO),
+    }),
+
+  simularPago: ({
+    orderId,
+    monto = null,
+    tipoPago = "TARJETA_CREDITO",
+    simularRechazo = false,
+  }) =>
+    solicitar("/payments/simular", {
+      method: "POST",
+      body: JSON.stringify({ orderId, monto, tipoPago, simularRechazo }),
     }),
 
   cambiarEstado: (orderId, estado) =>

@@ -105,8 +105,8 @@ export function leerSesion() {
     guardado = null;
   }
 
-  const rol = normalizarRol(guardado?.rol ?? claims.roles ?? claims.role);
-  const email = guardado?.email ?? claims.sub ?? "";
+  const rol = normalizarRol(claims.roles ?? claims.role ?? guardado?.rol);
+  const email = claims.sub ?? guardado?.email ?? "";
 
   if (!email && !rol) {
     limpiarSesion();

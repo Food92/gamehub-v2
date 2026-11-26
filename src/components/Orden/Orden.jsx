@@ -10,19 +10,31 @@ export default function Orden({
   validarCuponCheckout,
   finalizarCompra,
   procesandoCompra = false,
+  simularPagoOrden,
+  pagandoOrdenId = null,
   mensaje = "",
   navegar,
   formatoPrecio,
 }) {
   const [codigoCupon, setCodigoCupon] = useState(cuponValidado?.codigo ?? "");
+  const [tipoPago, setTipoPago] = useState("TARJETA_CREDITO");
   const descuentoEstimado = cuponValidado?.descuento ?? 0;
   const totalEstimado = Math.max(total - descuentoEstimado, 0);
   if (pedidoFinal) {
+    const pendientePago =
+      pedidoFinal.exitoso &&
+      String(pedidoFinal.estado ?? "").toUpperCase() === "PENDIENTE_PAGO";
+    const pagandoEstaOrden =
+      pagandoOrdenId != null &&
+      Number(pagandoOrdenId) === Number(pedidoFinal.orderId);
+
     return (
       <section className="form-card">
         <h1>
           {pedidoFinal.exitoso
-            ? "✓ Orden registrada en el servidor"
+            ? String(pedidoFinal.estado ?? "").toUpperCase() === "PAGADA"
+              ? "✓ Pago aprobado y orden confirmada"
+              : "✓ Orden registrada en el servidor"
             : "✕ No se pudo registrar la orden"}
         </h1>
         <p>
@@ -32,6 +44,12 @@ export default function Orden({
           <p>
             <strong>Estado:</strong>{" "}
             <span className="pill">{pedidoFinal.estado}</span>
+          </p>
+        )}
+        {pedidoFinal.codigoPago && (
+          <p>
+            <strong>Comprobante de pago:</strong> {pedidoFinal.codigoPago} (
+            {pedidoFinal.tipoPago || "TARJETA_CREDITO"})
           </p>
         )}
         <p>
@@ -45,6 +63,11 @@ export default function Orden({
         <p>
           <strong>Entrega:</strong> {pedidoFinal.cliente?.entrega}
         </p>
+        {pedidoFinal.promotionCode && (
+          <p>
+            <strong>Cupón aplicado:</strong> {pedidoFinal.promotionCode}
+          </p>
+        )}
         {pedidoFinal.descuento > 0 && (
           <p>
             <strong>Descuento:</strong> -{formatoPrecio(pedidoFinal.descuento)}
@@ -57,6 +80,49 @@ export default function Orden({
             {x.nombre} × {x.cantidad} — {formatoPrecio(x.precio * x.cantidad)}
           </p>
         ))}
+
+        {pendientePago && simularPagoOrden && (
+          <div className="checkout-grid">
+            <label>
+              Método de pago simulado
+              <select
+                value={tipoPago}
+                onChange={(e) => setTipoPago(e.target.value)}
+                disabled={pagandoEstaOrden}
+              >
+                <option value="TARJETA_CREDITO">Tarjeta de Crédito</option>
+                <option value="TARJETA_DEBITO">Tarjeta de Débito</option>
+                <option value="TRANSFERENCIA">Transferencia Bancaria</option>
+                <option value="WEBPAY_SIMULADO">Webpay Simulado</option>
+              </select>
+            </label>
+            <label>
+              Pasarela de pago demo
+              <button
+                className="btn full"
+                type="button"
+                disabled={pagandoEstaOrden}
+                onClick={() =>
+                  simularPagoOrden(pedidoFinal.orderId, {
+                    tipoPago,
+                    monto: pedidoFinal.total,
+                  })
+                }
+              >
+                {pagandoEstaOrden
+                  ? "Procesando pago..."
+                  : "Simular / Confirmar pago"}
+              </button>
+            </label>
+          </div>
+        )}
+
+        {mensaje && (
+          <p className="success" role="status">
+            {mensaje}
+          </p>
+        )}
+
         {!pedidoFinal.exitoso && (
           <button
             className="btn"
@@ -158,11 +224,11 @@ export default function Orden({
             </select>
           </label>
           <label>
-            Código de promoción (opcional)
+            Código de promoción (opcional: GAMER10 o GAMEHUB5000)
             <input
               name="promotionCode"
               type="text"
-              placeholder="Ej: GAMER10"
+              placeholder="Ej: GAMER10 o GAMEHUB5000"
               value={codigoCupon}
               onChange={(e) => setCodigoCupon(e.target.value)}
             />

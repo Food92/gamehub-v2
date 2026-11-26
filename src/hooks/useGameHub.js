@@ -169,6 +169,7 @@ export function useGameHub() {
   );
   const [cuponValidado, setCuponValidado] = useState(null);
   const [procesandoCompra, setProcesandoCompra] = useState(false);
+  const [pagandoOrdenId, setPagandoOrdenId] = useState(null);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
   const navegar = useCallback(
@@ -1251,6 +1252,7 @@ export function useGameHub() {
         numero: `GH-${ordenCreada.orderId}`,
         orderId: ordenCreada.orderId,
         estado: ordenCreada.estado,
+        promotionCode: ordenCreada.promotionCode || promotionCode || null,
         cliente: clienteForm,
         productos: carrito,
         subtotal: ordenCreada.subtotal ?? total,
@@ -1263,11 +1265,63 @@ export function useGameHub() {
       setCarrito([]);
       setCuponValidado(null);
       recargarCatalogo().catch(() => {});
+      cargarMisOrdenes().catch(() => {});
       navegar("resultado");
     } catch (error) {
       setMensaje(mensajeDeError(error));
     } finally {
       setProcesandoCompra(false);
+    }
+  };
+
+  // --- SIMULACIÓN DE PASARELA DE PAGO (payment-mscv -> order-mscv -> Firestore) ---
+  const simularPagoOrden = async (
+    orderId,
+    { tipoPago = "TARJETA_CREDITO", monto = null } = {},
+  ) => {
+    if (!usuario || (!esCliente(rol) && !esAdmin(rol))) {
+      setMensaje("Debes iniciar sesión como cliente o administrador para simular el pago.");
+      return false;
+    }
+    setPagandoOrdenId(orderId);
+    setMensaje("");
+    try {
+      const pago = await ordenesService.simularPago({
+        orderId,
+        tipoPago,
+        monto,
+        simularRechazo: false,
+      });
+      setPedidoFinal((actual) =>
+        actual && Number(actual.orderId) === Number(orderId)
+          ? {
+              ...actual,
+              estado: "PAGADA",
+              codigoPago: pago?.codigoPago ?? actual.codigoPago,
+              tipoPago: pago?.tipoPago ?? tipoPago,
+              fechaPago: pago?.fechaPago ?? new Date().toLocaleString("es-CL"),
+            }
+          : actual,
+      );
+      if (esAdmin(rol)) {
+        await cargarOrdenes();
+        if (Number(ordenSeleccionada?.orderId) === Number(orderId)) {
+          await verDetalleOrden(orderId);
+        }
+      }
+      if (esCliente(rol) || esAdmin(rol)) {
+        await cargarMisOrdenes();
+      }
+      recargarCatalogo().catch(() => {});
+      setMensaje(
+        `Pago aprobado${pago?.codigoPago ? ` (${pago.codigoPago})` : ""}. Orden #${orderId} actualizada a PAGADA.`,
+      );
+      return true;
+    } catch (error) {
+      setMensaje(mensajeDeError(error));
+      return false;
+    } finally {
+      setPagandoOrdenId(null);
     }
   };
 
@@ -1369,6 +1423,8 @@ export function useGameHub() {
     cuponValidado,
     validarCuponCheckout,
     procesandoCompra,
+    pagandoOrdenId,
+    simularPagoOrden,
     navegar,
     verDetalle,
     agregar,

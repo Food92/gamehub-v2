@@ -24,6 +24,8 @@ export default function Admin({
   onCerrarDetalleOrden,
   onRecargarOrdenes,
   onCambiarEstadoOrden,
+  onSimularPagoOrden,
+  pagandoOrdenId = null,
   onCancelarOrden,
   usuariosAdmin = [],
   cuentasAdmin = [],
@@ -377,6 +379,8 @@ export default function Admin({
           onRecargar={onRecargarOrdenes}
           puedeGestionar={true}
           onCambiarEstado={onCambiarEstadoOrden}
+          onSimularPago={onSimularPagoOrden}
+          pagandoOrdenId={pagandoOrdenId}
           onCancelarOrden={onCancelarOrden}
           mensaje={mensaje}
         />

@@ -5,6 +5,8 @@ import { etiquetaRol, esCliente } from "../../logica/roles.js";
 export default function Perfil({
   usuario,
   misOrdenes = [],
+  simularPagoOrden,
+  pagandoOrdenId = null,
   iniciarSesion,
   cerrarSesion,
   navegar,
@@ -95,17 +97,45 @@ export default function Perfil({
                 <th>Fecha</th>
                 <th>Estado</th>
                 <th>Total</th>
+                <th>Acción</th>
               </tr>
             </thead>
             <tbody>
-              {misOrdenes.map((orden) => (
-                <tr key={orden.orderId}>
-                  <td>#{orden.orderId}</td>
-                  <td>{orden.fecha ?? "—"}</td>
-                  <td>{orden.estado}</td>
-                  <td>{formatoPrecio(orden.total)}</td>
-                </tr>
-              ))}
+              {misOrdenes.map((orden) => {
+                const pendiente =
+                  String(orden.estado ?? "").toUpperCase() === "PENDIENTE_PAGO";
+                const pagando =
+                  pagandoOrdenId != null &&
+                  Number(pagandoOrdenId) === Number(orden.orderId);
+                return (
+                  <tr key={orden.orderId}>
+                    <td>#{orden.orderId}</td>
+                    <td>{orden.fecha ?? "—"}</td>
+                    <td>
+                      <span className="pill">{orden.estado}</span>
+                    </td>
+                    <td>{formatoPrecio(orden.total)}</td>
+                    <td>
+                      {pendiente && simularPagoOrden ? (
+                        <button
+                          type="button"
+                          className="btn"
+                          disabled={pagando}
+                          onClick={() =>
+                            simularPagoOrden(orden.orderId, {
+                              monto: orden.total,
+                            })
+                          }
+                        >
+                          {pagando ? "Pagando..." : "Simular pago"}
+                        </button>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

@@ -25,6 +25,8 @@ export default function OrdenesPanel({
   onRecargar,
   puedeGestionar = false,
   onCambiarEstado,
+  onSimularPago,
+  pagandoOrdenId = null,
   onCancelarOrden,
   mensaje = "",
 }) {
@@ -110,9 +112,31 @@ export default function OrdenesPanel({
 
         {puedeGestionar && (
           <div className="actions">
+            {String(ordenSeleccionada.estado ?? "").toUpperCase() ===
+              "PENDIENTE_PAGO" &&
+              onSimularPago && (
+                <button
+                  type="button"
+                  className="btn"
+                  disabled={
+                    pagandoOrdenId != null &&
+                    Number(pagandoOrdenId) === Number(ordenSeleccionada.orderId)
+                  }
+                  onClick={() =>
+                    onSimularPago(ordenSeleccionada.orderId, {
+                      monto: ordenSeleccionada.total,
+                    })
+                  }
+                >
+                  {pagandoOrdenId != null &&
+                  Number(pagandoOrdenId) === Number(ordenSeleccionada.orderId)
+                    ? "Procesando pago..."
+                    : "Simular pago (APROBADO)"}
+                </button>
+              )}
             <button
               type="button"
-              className="btn"
+              className="btn secondary"
               onClick={() =>
                 onCambiarEstado(ordenSeleccionada.orderId, "PAGADA")
               }
