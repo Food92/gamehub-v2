@@ -1,19 +1,39 @@
 import TarjetaProducto from "./TarjetaProducto.jsx";
 import "./Catalogo.css";
 
-/** Muestra productos con una tarjeta por elemento. */
+/** Muestra los estados de carga, error, vacío o la lista de productos. */
 export default function Catalogo({
   productos = [],
+  cargandoProductos = false,
+  errorProductos = "",
   formatoPrecio,
+  soloLectura = false,
   onVerCaracteristicas,
   onVerDetalle,
   onAgregar,
 }) {
-  if (!productos.length) {
+  if (cargandoProductos) {
+    return (
+      <div className="notice" role="status">
+        <p>Cargando productos...</p>
+      </div>
+    );
+  }
+
+  if (errorProductos) {
+    return (
+      <div className="notice" role="alert">
+        <h3>No se pudieron cargar los productos</h3>
+        <p className="muted">{errorProductos}</p>
+      </div>
+    );
+  }
+
+  if (productos.length === 0) {
     return (
       <div className="notice">
         <h3>No encontramos productos</h3>
-        <p className="muted">Prueba otra busqueda o categoria.</p>
+        <p className="muted">Prueba otra búsqueda o categoría.</p>
       </div>
     );
   }
@@ -25,6 +45,7 @@ export default function Catalogo({
           <TarjetaProducto
             producto={producto}
             formatoPrecio={formatoPrecio}
+            soloLectura={soloLectura}
             onVerCaracteristicas={onVerCaracteristicas}
             onVerDetalle={onVerDetalle}
             onAgregar={onAgregar}

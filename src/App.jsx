@@ -8,18 +8,20 @@ export default function App() {
   const gameHub = useGameHub();
   return (
     <>
-      <Header pagina={gameHub.pagina} />
+      <Header pagina={gameHub.pagina} rol={gameHub.rol} />
       <main className="container-fluid px-3 px-md-4 px-xl-5">
         <VistaActual {...gameHub} />
       </main>
       <Footer />
-      <a
-        href="#carrito"
-        className="floating-cart"
-        aria-label="Ver carrito de compras"
-      >
-         <span>{gameHub.cantidadTotal}</span>
-      </a>
+      {gameHub.puedeComprar && (
+        <a
+          href="#carrito"
+          className="floating-cart"
+          aria-label="Ver carrito de compras"
+        >
+          <span>{gameHub.cantidadTotal}</span>
+        </a>
+      )}
       {gameHub.modal && (
         <div
           className="modal"
@@ -46,9 +48,11 @@ export default function App() {
                 <li key={c}>{c}</li>
               ))}
             </ul>
-            <button className="btn full" onClick={gameHub.agregarDesdeModal}>
-              Agregar al carrito
-            </button>
+            {gameHub.puedeComprar && (
+              <button className="btn full" onClick={gameHub.agregarDesdeModal}>
+                Agregar al carrito
+              </button>
+            )}
           </section>
         </div>
       )}

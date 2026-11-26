@@ -12,17 +12,4 @@ export const productosIniciales = [
 // Las funciones trabajan con copias para no modificar directamente los datos originales.
 export const listarProductos = (lista = productosIniciales) => [...lista];
 
-export function crearProducto(lista, producto) {
-  if (!producto.nombre?.trim()) throw new Error("El nombre es obligatorio");
-  if (!Number.isFinite(Number(producto.precio)) || Number(producto.precio) < 0) throw new Error("El precio debe ser válido");
-  if (lista.some((item) => item.id === producto.id)) throw new Error("El ID ya existe");
-  return [...lista, { ...producto, precio: Number(producto.precio) }];
-}
 
-export function actualizarProducto(lista, id, cambios) {
-  return lista.map((item) => item.id === id ? { ...item, ...cambios, id, precio: cambios.precio === undefined ? item.precio : Number(cambios.precio) } : item);
-}
-
-export function eliminarProducto(lista, id) {
-  return lista.filter((item) => item.id !== id);
-}
